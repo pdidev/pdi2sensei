@@ -1,0 +1,45 @@
+# duration in seconds
+duration: 600.0
+# global [height, width] (excluding boundary conditions or ghosts)
+datasize: [200, 200]
+# degree of parallelism
+parallelism: { height: 1, width: 1 }
+
+# only the following config is passed to PDI
+pdi:
+  metadata: # type of small values for which PDI keeps a copy
+    iter:   int                    # current iteration id
+    dsize:  { size: 2, type: array, subtype: int } # local data size including ghosts/boundary
+    psize:  { size: 2, type: array, subtype: int } # number of processes in each dimension
+    pcoord: { size: 2, type: array, subtype: int } # coordinate of the process
+  data: # type of values for which PDI does not keep a copy
+    main_field: { size: [ '$dsize[0]', '$dsize[1]' ], type: array, subtype: double }
+  
+  plugins:
+    mpi:
+    pycall:
+      on_event:
+        init_insitu:
+          exec: |
+            import pdi2sensei
+            from pdi2sensei.utility import getVtkImageData
+            
+            bridge = pdi2sensei.Bridge(adiosFile = 'adios.cfg')
+            bridge.addMesh(getVtkImageData(202,202))
+            
+        update_insitu:
+          with: { newiter: $iter, field: '$main_field', time: '$time' }
+          exec: |
+            bridge.addDataForTimeStep(EveryXTimesteps = 10, data = field, name = "main_field")
+            bridge.update(time)
+        finalization:
+          exec: |
+            bridge.finalize()
+      on_data:
+        psize_1d: |
+          import pdi2sensei
+          pdi2sensei.n_ranks = int(psize_1d)
+        pcoord_1d: |
+          import pdi2sensei
+          pdi2sensei.rank = int(pcoord_1d)
+

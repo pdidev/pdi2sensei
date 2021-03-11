@@ -1,0 +1,13 @@
+module purge
+
+
+module use ${OTHERSTAGES}
+ml Stages/Devel-2020  GCC/9.3.0  ParaStationMPI/5.4.7-1
+ml ParaView/5.8.1-Python-3.8.5
+ml ADIOS2/2.7.0-Python-3.8.5
+ml pdi
+ml sensei/develop-adios2-catalyst-5.8.1-Python-3.8.5
+module unload mpi4py/3.0.3-Python-3.8.5
+ml mpi4py/3.0.3-Python-3.8.5
+
+export PYTHONPATH=$PYTHONPATH:/p/home/jusers/leuschke1/juwels/myProject/Jupyter/pdi/git2/pdi-sensei-plugin
