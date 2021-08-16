@@ -25,7 +25,7 @@ pdi:
             from pdi2sensei.utility import getVtkImageData
             
             bridge = pdi2sensei.Bridge(adiosFile = 'adios.cfg')
-            bridge.addMesh(getVtkImageData(202,202))
+            bridge.addMesh(getVtkImageData(size=[202,202]))
             
         update_insitu:
           with: { newiter: $iter, field: '$main_field', time: '$time' }
