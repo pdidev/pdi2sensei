@@ -72,6 +72,7 @@ def _read_data(fileName, method, scriptPaths):
   return retval
 
 class Endpoint:
+  """Provided class for a simple Endpoint, as a default accepting input vis ADIOS2 SST engine and passing it on to the choosen Catalyst script"""
   
   def __init__(self, adiosFile):
     self._fileName = adiosFile
@@ -79,9 +80,11 @@ class Endpoint:
     self._scriptPaths = []
   
   def addCatalystScript(self, scriptPath):
+    """Add the path to a Catalyst script to be used by in situ pipeline. Multiple can be added"""
     self._scriptPaths.append(scriptPath)
 
   def startEndpoint(self):
+    """Start the Endpoint to accept the connection, this function call will leave after the connection is terminated"""
     ierr = _read_data(self._fileName, self._method, self._scriptPaths)
     if ierr:
       _error_message('read failed')
