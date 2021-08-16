@@ -19,6 +19,21 @@ def getVtkImageData(size, origin = [0,0,0], spacing=[1,1,1], ghostLvl=0):
 
 
 
+def getVtkRectliniearGrid(size, origin = [0,0,0], spacing, ghostLvl=0):
+  """Function building a VTKImageData as a mesh, accepting an array for size and origin
+  These two arrays can contain 2 or three elements, either for a 2D or 3D case
+  Spacing is a list of three arrays, each corresponding in size to the provided size array"""
+  grid = vtk.vtkRecliniearGrid()
+  # in case of a two dimensional array
+  if len(size) == 2:
+    size = [size[0], size[1], 1]
+    origin = [origin[0], origin[1], 0]
+    spacing = [spacing[0], spacing[1], 1]
+  grid.SetDimensions(size[0],size[1],size[2])
+  grid.SetSpacing(spacing[0],spacing[1],spacing[2])
+  grid.SetOrigin(origin[0],origin[1],origin[2])
+  return grid
+
 
 def getVtkUnstructured(points, faces, ghostLvl=0):
   """Function building a VTKUnstruktured Grid using the provided points and faces"""
