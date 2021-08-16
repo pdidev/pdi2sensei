@@ -1,5 +1,9 @@
 ## Changelog
 
+# pdi2sensei 0.3.0
+- Added Grids to utility
+- Reworked Bridge class
+
 # pdi2sensei 0.2.0
 
 - No need for users to directly interact with data adaptor and analysis adaptor anymore, is replaced by the Bridge class
