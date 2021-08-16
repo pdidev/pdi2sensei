@@ -40,6 +40,7 @@ def check_arg(dic, arg, dfl=None, req=True):
 
 
 class data_adaptor:
+    """class for choosing and preconfigurtion of the data Adaptor for sensei"""
     def __init__(self):
         # data from sim
         self.arrays = {}
@@ -159,6 +160,7 @@ class data_adaptor:
         return callback
 
 class analysis_adaptor:
+    """class for schoosing and preconfiguation of the used analysis adaptor, choices are Adios2, Catalyst and LibSim"""
     def __init__(self):
         self.AnalysisAdaptor = None
 
