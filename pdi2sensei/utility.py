@@ -15,3 +15,16 @@ def getVtkImageData(size, origin = [0,0,0], spacing=[1,1,1], ghostLvl=0):
   grid.SetSpacing(spacing[0],spacing[1],spacing[2])
   grid.SetOrigin(origin[0],origin[1],origin[2])
   return grid
+
+
+
+
+
+def getVtkUnstructured(points, faces, ghostLvl=0):
+  """Function building a VTKUnstruktured Grid using the provided points and faces"""
+  grid = vtk.vtkUnstrukturedGrid()
+  
+  grid.getPointsArray().SetArray(points)
+  grid.getFaceArray().SetArray(faces)
+  return grid
+
