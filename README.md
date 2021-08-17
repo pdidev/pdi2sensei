@@ -30,5 +30,14 @@ If you want to use pdi2sensei for your code a couple of steps need to be done:
 - Install / load the dependencies of pdi2sensei
 - [Include PDI in your simulation code](https://pdi.julien-bigot.fr/master/Hands_on.html)
 - Write a configuration file for PDI that includes passing on the data to pdi2sensei
+  - examples of a configuration file can be found in the `example/` folder
+  - The configuration file should include:
+    - A call to the pycall plugin
+    - import pdi2sensei
+    - initilize pdi2sensei Bridge
+    - set a VTK mesh, describing the spatial distribution of your data (for common cases there are functions in pdi2sensei.utility to help with generating these meshes)
+    - add the mesh to your bridge
+    - add an event or data share from your simulation to add the data to the bridge
+    - call the method execute from your bridge class
 - Setup the visualization pipeline you wish to use with the ParaView GUI and export it as a Catalyst script
 - Start the simulation and the visualization Endpoint
