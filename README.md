@@ -2,7 +2,7 @@
 
 - PDI 1.0.0 
 - Adios2
-- Sensei 3.2 with ParaView 5.7 or paraView 5.8
+- Sensei 3.2 with ParaView 5.7 or ParaView 5.8
 
 
 
