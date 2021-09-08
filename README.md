@@ -7,11 +7,11 @@
 # [pdi2sensei](https://github.com/pdidev/pdi2sensei)
 
 
-Here we have an in transit / in situ solution, that interfaces with your simulation using [ PDI ](https://pdi.julien-bigot.fr/master/) and [ pdi2sensei ](https://github.com/pdidev/pdi2sensei). Hereby pdi2sensei takes care of the data transformation and setting up all the needed connections. This allows a very easy and reduced setup for the user of the simulation.
+The goal of pdi2sensei is to enable simulations easier use of in situ methods. This goal is approached by using [ PDI ](https://pdi.julien-bigot.fr/master/) as the interface that is included in the simulation code. Afterward, this interface can be used to specify different I/O operations and enable in situ using pdi2sensei. These changes can be made in a separate file, that can be changed after building the simulation.
+
+Using pdi2sensei removes the direct dependencies of the simulation code to the in situ libraries, reducing the difficulties for the simulation development. Furthermore, pdi2sensei employs an in transit model, therefore transporting the data to a different node, before doing the actual visualization on those extra nodes. To have a flexible solution with good transport mechanisms we use different libraries like [ SENSEI ](https://github.com/SENSEI-insitu/SENSEI) and  [ ADIOS2 ](https://adios2.readthedocs.io/en/latest/introduction/introduction.html). This may sound like a counterintuitive solution to make it easier, but in pdi2sensei we set the data transport and in situ visualization with [Catalyst from ParaView]((https://www.paraview.org/in-situ/)) as the default, so there is no need to make changes there, so this complexity does not touch the end-user.
 
 PDI (PDI data interface) is a library interface for multiple different I/O libraries. PDI allows users to customize the data output of the simulation via a configuration file without recompiling the simulation or needing those libraries at build time. Here we are using PDI as our interface to the simulation and include an in transit / in situ solution as our PDI I/O configuration.
-
-For this solution, we are using the python library pdi2sensei, which transforms the data to the VTK format and interacts with [ SENSEI ](https://github.com/SENSEI-insitu/SENSEI) for us. In SENSEI we utilize ADIOS2 for a scalable data transport to transport the data to our visualization endpoint (to minimize any impacts of the visualization on the simulation). This endpoint is running the second instance of SENSEI, that is accepting the data via ADIOS2 and passes it on to [ParaView Catalyst](https://www.paraview.org/in-situ/) for a predefined visualization script and interactive live visualization. 
 
 The following overview shows all the components, that are used in the default configuration:
 
@@ -36,7 +36,7 @@ You will need to download [ pdi2sensei ](https://github.com/pdidev/pdi2sensei) a
 
 ### Runtime dependencies
 
-For actually running ALYA with pdi2sensei, there are additional requirements:
+For actually running a simulation with pdi2sensei, there are additional requirements:
 - You will need [ ADIOS2 ](https://adios2.readthedocs.io/en/latest/setting_up/setting_up.html) with at least `ADIOS2_USE_SST` enabled.
 - Additionally, you will need [ ParaView ](https://github.com/Kitware/ParaView/blob/master/Documentation/dev/build.md) with Catalyst support, enabling `PARAVIEW_CATALYST` and `PARAVIEW_CATALYST_PYTHON`.
   - The last official Sensei release (v3.2.1) only supports up ParaView 5.7
@@ -44,13 +44,6 @@ For actually running ALYA with pdi2sensei, there are additional requirements:
 - Furthermore [ Sensei ](https://github.com/SENSEI-insitu/SENSEI)  is needed. You will need to build Sensei, which has ADIOS2 and ParaView Catalyst enabled. Therefore setting `ENABLE_CATALYST`, `ENABLE_CATALYST_PYTHON` and `ENABLE_ADIOS2`. Sensei offers ADIOS2 support starting with version 3.2.0.
 - As the last dependency you will need to download [ pdi2sensei ](https://github.com/pdidev/pdi2sensei) and add it to your `PYTHONPATH`
 
-
-
-# Goals
-
-The goal of pdi2sensei is to enable simulations easier use of in situ methods. This goal is approached by using PDI as the interface that is included in the simulation code. Afterward, this interface can be used to specify different I/O operations and enable in situ using pdi2sensei. These changes can be made in a separate file, that can be changed after building the simulation.
-
-Using pdi2sensei removes the direct dependencies of the simulation code to the in situ libraries, reducing the difficulties for the simulation development. Furthermore, pdi2sensei employs an in transit model, therefore transporting the data to a different node, before doing the actual visualization on those extra nodes. To have a flexible solution with good transport mechanisms we use different libraries like Sensei and Adios2. This may sound like a counterintuitive solution to make it easier, but in pdi2sensei we set the data transport and in situ visualization with Catalyst from ParaView as the default, so there is no need to make changes there, so this complexity does not touch the end-user.
 
 
 ## Example
