@@ -16,7 +16,7 @@ For this solution, we are using the python library pdi2sensei, which transforms 
 The following overview shows all the components, that are used in the default configuration:
 
 <p align="center">
-<img src=doc/overview.png title="Overview over all the components used for the Setup with two different jobs, one for the simulation and one for the visualization Endpoint" width="600" style="float:center"/>
+<img src=docs/overview.png title="Overview over all the components used for the Setup with two different jobs, one for the simulation and one for the visualization Endpoint" width="600" style="float:center"/>
 </p>
 
 Here you can see the in transit nature of this setup. In a High-Performance Computing(HPC) setting, you could run two jobs, one will run your simulation, while the other job (called endpoint) accepts the data from your simulation and processes it using those compute resources. 
